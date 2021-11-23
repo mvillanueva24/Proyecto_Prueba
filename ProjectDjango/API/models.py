@@ -20,7 +20,7 @@ class Hoteles(models.Model):
     Imagen = models.ImageField(upload_to='hoteles', blank=True,null=True)
 
     def __str__(self):
-        return self.Nombre_hotel
+        return self.Categoria.Nombre_categoria + " - " + self.Nombre_hotel
 
 class TipoHabitacion(models.Model):
     Tipo_habitacion = models.CharField(max_length=100)
@@ -31,15 +31,27 @@ class TipoHabitacion(models.Model):
         return self.Tipo_habitacion
 
 class Habitaciones(models.Model):
+
+    ChoicesWifi = (
+        ("1", "4G"),
+        ("2", "5G")
+    )
+
+    ChoicesEstado = (
+        ("1", "A"),
+        ("2", "X")
+    )
+
+    Nro_habitacion = models.CharField(max_length=3,default='')
     Hotel = models.ForeignKey(Hoteles, on_delete=models.CASCADE, related_name="hotel_habitaciones")
     Tipo_habitacion = models.ForeignKey(TipoHabitacion, on_delete=models.CASCADE, related_name="tipo_habitacion_habitaciones")
     Imagen = models.ImageField(upload_to='habitaciones', blank=True, null=True)
-    Estado_habitacion = models.CharField(max_length=1) # A  X  A="Habilitado"  X="Deshabilitado"
+    Estado_habitacion = models.CharField(max_length=2, choices=ChoicesEstado) # A  X  A="Habilitado"  X="Deshabilitado"
     Cerradura_electronica = models.BooleanField(default=True)
-    Wifi = models.CharField(max_length=2) # 4G o 5G
+    Wifi = models.CharField(max_length=2, choices=ChoicesWifi) # 4G o 5G
 
     def __str__(self):
-        return self.Estado_habitacion
+        return self.Hotel.Nombre_hotel + " - " + self.Nro_habitacion
     
 ## MODEL SENSORES ARDUINO
 class Arduinos(models.Model):
@@ -68,4 +80,4 @@ class Reserva(models.Model):
     Token = models.CharField(max_length=100)
 
     def __str__(self):
-        return str(self.Precio_total)
+        return self.Cliente.Nombre + " - " + self.Habitacion.Nro_habitacion
