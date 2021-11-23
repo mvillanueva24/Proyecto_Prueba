@@ -55,7 +55,7 @@ class Habitaciones(models.Model):
     
 ## MODEL SENSORES ARDUINO
 class Arduinos(models.Model):
-    Habitacion = models.ForeignKey(Habitaciones, on_delete=models.CASCADE, related_name="habitacion_arduinos",default='')
+    Habitacion = models.OneToOneField(Habitaciones, on_delete=models.CASCADE, related_name="habitacion_arduinos",default='')
     Arduino = models.CharField(max_length=100)
     Temperatura = models.DecimalField(max_digits=4, decimal_places=2)
     Estado_ventalidor = models.BooleanField(default=True)
