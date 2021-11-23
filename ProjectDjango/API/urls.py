@@ -11,5 +11,4 @@ urlpatterns = [
     path('arduinos/', views.arduinos),
     path('cliente/', views.cliente),
     path('reserva/', views.reserva),
-    
 ]
