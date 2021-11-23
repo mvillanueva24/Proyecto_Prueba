@@ -38,8 +38,8 @@ class Habitaciones(models.Model):
     )
 
     ChoicesEstado = (
-        ("1", "A"),
-        ("2", "X")
+        ("1", "Disponible"),
+        ("2", "No Disponible")
     )
 
     Nro_habitacion = models.CharField(max_length=3,default='')
